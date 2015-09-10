@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>EPICOM</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,300,300italic,700,700italic,900,900italic,400italic,100italic,100' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/jqueryui.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+</head>
+<body class="login">
+	<div class="box-global" ng-app="MyApp" ng-controller="MyController">
+		<!-- Box login -->
+		<div class="box-login bg_white" ng-hide="IsHiddenBoxLogin">
+			<h1>EPICOM</h1>
+			<div class="f-left col_50 p10-20 b-right-grey">
+				<h3>Sua vitrine com um alcance mais amplo!</h3>
+				<p class="pbottom-20">
+					Faça parte do ecossistema Epicom Marketing Place Hub, explore um universo de possibilidades,
+					e ofereça extrema conveniência aos clientes de sua loja!
+				</p>
+				<a href="" class="btn grey">Saber mais</a>
+			</div>
+			<div class="f-right col_50 p10-20">		
+				<form id="formLogin" name="formLogin" method="POST" action="">
+					<ul>	
+						<li class="emailwrap">
+							<span class="error-message" id="lblEmailValidation"></span>
+							<label class="d-block m-b5">E-mail</label>
+							<input type="text" class="input col_100" id="txtEmail"/>
+						</li>
+						<li class="passwrap">
+							<span class="error-message" id="lblPasswordValidation"></span>
+							<label class="d-block m-b5">Senha</label>
+							<input type="password" class="input col_100"  id="txtPassword" />
+						</li>
+						<li class="feedback errormessage"></li>
+						
+						<li>
+							<button class="btn red col_100 t-center t-up" id="btnEntrar">Entrar</button>
+						</li>
+						<li class="t-center">
+							<a href="javascript:;" ng-click="ShowHideForgotPassword()">Não consegue acessar sua conta?</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+		<!-- Não consegue acessar-->
+		<div class="box-acesso bg_white" ng-hide="IsHideNotAcess">
+			<h1>EPICOM</h1>
+			<div class="p10-20 acesso">
+				
+				<h3>Não consegue acessar?</h3>
+				<p class="pbottom-20">Sem problema! Digite seu email e  reenviaremos um email para trocar sua senha.</p>
+				<form id="formAcess" name="formAcess" method="POST" action="">
+					<ul>
+						<li class="emailwrap">
+							<span class="error-message" id="lblEmailValidationAcesso"></span>
+							<label class="d-block m-b5">E-mail</label>
+							<input type="text" name="email-acesso" class="input col_100" id="txtEmailAcesso"/>
+						</li>
+						<li class="feedback errormessage"></li>
+						<li>
+							<a href="javascript:;" class="p10-0-40" ng-click="ShowHideBoxLogin()">Voltar para Login</a>
+							<button class="btn red w_100 t-center t-up" id="btnEnviar">Enviar</button>
+						</li>
+					</ul>
+				</form>
+				
+			</div>
+			<a href="login.html" class="p10-0-40 dNone voltar-para-login">Voltar para Login</a>			
+		</div>
+		<div class="login-cadastrar" ng-hide="IsHiddenBoxRegister">Você não tem conta?<a href=""> Tenha a sua agora!</a></div>
+		
+	</div>
+
+   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+   	<script type="text/javascript">
+
+   		
+
+		var app = angular.module('MyApp', [])
+        app.controller('MyController', function ($scope) {
+            //This will hide the DIV by default.
+            $scope.IsHiddenBoxLogin = false;
+			$scope.IsHideNotAcess = true;
+			$scope.IsHiddenBoxRegister = false;
+			
+            $scope.ShowHideBoxLogin = function () {
+                //If DIV is hidden it will be visible and vice versa.
+                $scope.IsHiddenBoxLogin = $scope.IsHiddenBoxLogin ? false : true;
+				$scope.IsHideNotAcess = true ;
+				$scope.IsHiddenBoxRegister = $scope.IsHiddenBoxRegister ? false : true;
+				
+            }
+			$scope.ShowHideForgotPassword = function () {
+                //If DIV is hidden it will be visible and vice versa. 
+				$scope.IsHideNotAcess = $scope.IsHideNotAcess ? false : true;
+				$scope.IsHiddenBoxLogin =  true;
+				$scope.IsHiddenBoxRegister =true;
+            }
+
+
+        });
+
+        $(document).ready(function(){
+
+   			$( "#formLogin" ).submit(function( event ) {
+				$("#lblPasswordValidation").hide();
+	   			$("#lblEmailValidation").hide();
+	   			$(".errormessage").hide();
+	   			$("li.error").removeClass("error");
+				var _error= false;
+				var email = $( "#txtEmail" ).val();
+				var senha = $( "#txtPassword" ).val();
+				if (  email == '' ) {
+				    $( "#lblEmailValidation" ).text( "Preencha esse campo." ).show();
+				    $(".emailwrap").addClass("error");
+				    _error = true;
+				   
+				}else{
+   				
+	   				var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+	    			if ( ! pattern.test( $("#txtEmail").val()) ){
+
+	    			 	$( "#lblEmailValidation" ).text( "Email inválido." ).show();
+					    $(".emailwrap").addClass("error");
+					    _error = true;
+	    			}
+    			}
+				if( senha == '' ){
+					$( "#lblPasswordValidation" ).text( "Preencha esse campo." ).show();
+   				 	$( ".passwrap").addClass("error" );
+   				 	 _error = true;
+				}
+
+				if ( $("#txtEmail").val() == "erro@epicom.com.br" ){
+					$(".errormessage").html('<i class="fa fa-ban"></i>Erro no sistema tente mais tarde.').show();
+					return false;
+				}
+
+				if ( $("#txtEmail").val() == "invalido@epicom.com.br" ){
+					$(".errormessage").html('<i class="fa fa-ban"></i>E-mail ou senha inválido.').show();
+					return false;
+				}
+				
+				if(_error){
+					return false;
+				}else{
+					
+					window.location.href = "vendas.html";
+					
+				}
+				
+			  	event.preventDefault();
+			});
+			
+
+
+   			$( "#formAcess" ).submit(function( event ) {
+				
+	   			$("#lblEmailValidationAcesso").hide();
+	   			$(".errormessage").hide();
+	   			$("li.error").removeClass("error");
+				var _errorAcesso = false;
+				var emailAcesso = $( "input[name=email-acesso]" ).val();
+				
+				if (  emailAcesso == '' ) {
+				    $( "#lblEmailValidationAcesso" ).text( "Preencha esse campo." ).show();
+				    $(".emailwrap").addClass("error");
+				    _errorAcesso = true;
+				   
+				}else{
+   				
+	   				var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+	    			if ( ! pattern.test( emailAcesso) ){
+
+	    			 	$( "#lblEmailValidationAcesso" ).text( "Email inválido." ).show();
+					    $(".emailwrap").addClass("error");
+					    _errorAcesso = true;
+	    			}
+    			}
+				
+
+				if ( emailAcesso == "erro@epicom.com.br" ){
+					$(".errormessage").html('<i class="fa fa-ban"></i>Erro no sistema tente mais tarde.').show();
+					_errorAcesso = true;
+				}
+
+				if ( emailAcesso == "invalido@epicom.com.br" ){
+					$(".errormessage").html('<i class="fa fa-ban"></i>E-mail não localizado em nossa base de dados.').show();
+					_errorAcesso = true;
+				}
+				
+				if(_errorAcesso){
+					return false;
+				}else{
+					
+					$('.acesso').html('<p class="p100">Pronto! Acesse seu email e veja o email que enviamos. :)</p>');
+					$('.dNone').show();
+					return false;
+				}
+			  	event.preventDefault();
+			});
+
+   		});
+
+
+   	</script>
+
+</body>
+</html>

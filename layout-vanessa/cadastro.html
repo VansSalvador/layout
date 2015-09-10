@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>EPICOM</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,300,300italic,700,700italic,900,900italic,400italic,100italic,100' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/jqueryui.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+</head>
+<body class="login">
+	<div class="box-global" ng-app="MyApp" ng-controller="MyController">
+		<!-- Box login -->
+		<div class="box-login bg_white" >
+			<h1>EPICOM</h1>
+			<div class="f-left col_50 p10-20 b-right-grey">
+				<h3>Complete, que entraremos em contato!</h3>
+				<form id="formCadastro" name="formCadastro" method="POST" action="">
+					<ul ng-hide="IsHiddenBoxCadastroParte1"> 	
+						<li class="passwrap">
+							<span class="error-message" id="lblNomeValidation"></span>
+							<label class="d-block m-b5">Nome e Sobrenome</label>
+							<input type="password" name="nome" class="input col_100"  id="txtNomeSobrenome" />
+						</li>
+						<li class="emailwrap">
+							<span class="error-message" id="lblEmailValidation"></span>
+							<label class="d-block m-b5">E-mail</label>
+							<input type="text" name="email" class="input col_100" id="txtEmail"/>
+						</li>
+						
+						<li class="feedback errormessage"></li>
+						
+						<li>
+							<button class="btn red col_100 t-center t-up" id="btnEntrar">Avançar</button>
+						</li>	
+					</ul>
+					<ul ng-hide="IsHiddenBoxCadastroParte2"> 	
+						<li class="passwrap">
+							<span class="error-message" id="lblEmpresaValidation"></span>
+							<label class="d-block m-b5">Empresa</label>
+							<input type="password" name="empresa" class="input col_100"  id="txtEmpresa" />
+						</li>
+						<li class="emailwrap">
+							<span class="error-message" id="lblTelefoneValidation"></span>
+							<label class="d-block m-b5">Telefone</label>
+							<input type="text" name="telefone" class="input col_100" id="txtTelefone"/>
+						</li>
+						
+						<li class="feedback errormessage"></li>
+						
+						<li>
+							<button class="btn red col_100 t-center t-up" id="btnEntrar">Avançar</button>
+						</li>	
+					</ul>
+					<ul ng-hide="IsHiddenBoxCadastroParte3"> 	
+						<li>
+							<p>Perfeito! Espere só mais um pouquinho. Iremos entrar em contato com você logo.
+						</li>
+						
+						
+						<li>
+							<a href="login.html" class="p10-0-40">Voltar para Login</a>
+						</li>
+						
+					</ul>
+				</form>
+				
+			</div>
+			<div class="f-right col_50 p10-20">		
+
+				<h3>Várias empresas grandes conosco.</h3>
+				<p class="pbottom-20">
+					integrado com importantes lojas de nicho e plataformas de comércio eletrônico.<br/>
+					<strong>Marketplace Homologados:</strong> Sua vitrine com alcance mais amplo!
+				</p>
+			</div>
+		</div>
+		
+		<div class="login-cadastrar" ng-hide="IsHiddenBoxRegister">Você já tem conta?<a href="login.html"> Faça seu login!</a></div>
+		
+	</div>
+
+   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+   	<script type="text/javascript">
+
+   		
+
+		var app = angular.module('MyApp', [])
+        app.controller('MyController', function ($scope) {
+            //This will hide the DIV by default.
+            $scope.IsHiddenBoxCadastroParte1 = false;
+			$scope.IsHiddenBoxCadastroParte2 = true;
+			$scope.IsHiddenBoxCadastroParte3 = true;
+			
+   //          $scope.ShowHideBoxLogin = function () {
+   //              //If DIV is hidden it will be visible and vice versa.
+   //              $scope.IsHiddenBoxLogin = $scope.IsHiddenBoxLogin ? false : true;
+			// 	$scope.IsHideNotAcess = true ;
+			// 	$scope.IsHiddenBoxRegister = $scope.IsHiddenBoxRegister ? false : true;
+				
+   //          }
+			// $scope.ShowHideForgotPassword = function () {
+   //              //If DIV is hidden it will be visible and vice versa. 
+			// 	$scope.IsHideNotAcess = $scope.IsHideNotAcess ? false : true;
+			// 	$scope.IsHiddenBoxLogin =  true;
+			// 	$scope.IsHiddenBoxRegister =true;
+   //          }
+
+
+        });
+
+        $(document).ready(function(){
+
+   			$( "#formCadastro" ).submit(function( event ) {
+				$("#lblNomeValidation").hide();
+	   			$("#lblEmailValidation").hide();
+	   			$("#lblEmpresaValidation").hide();
+	   			$("#lblTelefoneValidation").hide();
+	   			$(".errormessage").hide();
+	   			$("li.error").removeClass("error");
+				var _error= false;
+				var email = $( "#txtEmail" ).val();
+				var nome = $( "#txtNomeSobrenome" ).val();
+				var empresa = $( "#txtEmpresa" ).val();
+				var telefone = $( "#txtTelefone" ).val();
+				if(txtNomeSobrenome == ''){
+					$( "#lblNomeValidation" ).text( "Preencha esse campo." ).show();
+   				 	$( this ).prev('li').addClass("error" );
+   				 	 _error = true;
+
+				}
+				if (  email == '' ) {
+				    $( "#lblEmailValidation" ).text( "Preencha esse campo." ).show();
+				    $(".emailwrap").addClass("error");
+				    _error = true;
+				   
+				}else{
+   				
+	   				var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+	    			if ( ! pattern.test( $("#txtEmail").val()) ){
+
+	    			 	$( "#lblEmailValidation" ).text( "Email inválido." ).show();
+					    $(".emailwrap").addClass("error");
+					    _error = true;
+	    			}
+    			}
+				if( empresa == '' ){
+					$( "#lbEmpresaValidation" ).text( "Preencha esse campo." ).show();
+   				 	$( this ).prev('li').addClass("error" );
+   				 	 _error = true;
+				}
+				if( telefone == '' ){
+					$( "#lbTelefoneValidation" ).text( "Preencha esse campo." ).show();
+   				 	$( this ).prev('li').addClass("error" );
+   				 	 _error = true;
+				}
+
+				if ( $("#txtEmail").val() == "erro@epicom.com.br" ){
+					$(".errormessage").html('<i class="fa fa-ban"></i>Erro no sistema tente mais tarde.').show();
+					return false;
+				}
+
+				if ( $("#txtEmail").val() == "invalido@epicom.com.br" ){
+					$(".errormessage").html('<i class="fa fa-ban"></i>E-mail ou senha inválido.').show();
+					return false;
+				}
+				
+				if(_error){
+					return false;
+				}else{
+					return true;
+					
+				}
+				
+			  	event.preventDefault();
+			});
+			
+
+
+   			$( "#formAcess" ).submit(function( event ) {
+				
+	   			$("#lblEmailValidationAcesso").hide();
+	   			$(".errormessage").hide();
+	   			$("li.error").removeClass("error");
+				var _errorAcesso = false;
+				var emailAcesso = $( "input[name=email-acesso]" ).val();
+				
+				if (  emailAcesso == '' ) {
+				    $( "#lblEmailValidationAcesso" ).text( "Preencha esse campo." ).show();
+				    $(".emailwrap").addClass("error");
+				    _errorAcesso = true;
+				   
+				}else{
+   				
+	   				var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+	    			if ( ! pattern.test( emailAcesso) ){
+
+	    			 	$( "#lblEmailValidationAcesso" ).text( "Email inválido." ).show();
+					    $(".emailwrap").addClass("error");
+					    _errorAcesso = true;
+	    			}
+    			}
+				
+
+				if ( emailAcesso == "erro@epicom.com.br" ){
+					$(".errormessage").html('<i class="fa fa-ban"></i>Erro no sistema tente mais tarde.').show();
+					_errorAcesso = true;
+				}
+
+				if ( emailAcesso == "invalido@epicom.com.br" ){
+					$(".errormessage").html('<i class="fa fa-ban"></i>E-mail não localizado em nossa base de dados.').show();
+					_errorAcesso = true;
+				}
+				
+				if(_errorAcesso){
+					return false;
+				}else{
+					
+					$('.acesso').html('<p class="p100">Pronto! Acesse seu email e veja o email que enviamos. :)</p>');
+					$('.dNone').show();
+					return false;
+				}
+			  	event.preventDefault();
+			});
+
+   		});
+
+
+   	</script>
+
+</body>
+</html>
